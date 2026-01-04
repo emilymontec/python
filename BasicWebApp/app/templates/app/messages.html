@@ -17,28 +17,47 @@
     body {
       font-family: 'Segoe UI', 'Gill Sans', Calibri, sans-serif;
       color: #333;
-      background-color: #f9f9f9;
+      background-color: #fff;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       align-items: center;
     }
 
-    /* Contenedor Principal */
+    /* Contenedor Principal Ajustado */
     .main-content {
       flex: 1;
       width: 100%;
-      max-width: 500px;
+      max-width: 1000px; /* Aumentado para dar espacio a dos columnas */
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 40px 20px;
     }
 
+    /* Nuevo contenedor para las dos columnas */
+    .content-wrapper {
+      display: flex;
+      width: 100%;
+      gap: 40px; /* Espacio entre formulario y lista */
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+
+    /* Secciones individuales */
+    .form-section, .list-section {
+      flex: 1; /* Ambas ocupan el mismo espacio */
+      width: 100%;
+    }
+
     .image {
       width: 150px;
       height: auto;
       margin-bottom: 1.5rem;
+    }
+    .image:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
     }
 
     .title {
@@ -49,7 +68,7 @@
       text-align: center;
     }
 
-    /* Estilos del Formulario de Django */
+    /* Estilos del Formulario */
     .form {
       width: 100%;
       display: flex;
@@ -61,7 +80,6 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
 
-    /* Mejora visual de los inputs que genera Django */
     .form p {
       display: flex;
       flex-direction: column;
@@ -80,7 +98,7 @@
     button {
       padding: 12px;
       cursor: pointer;
-      background-color: #092e20; /* Verde Django */
+      background-color: #092e20;
       color: white;
       border: none;
       border-radius: 6px;
@@ -97,9 +115,8 @@
     .subtitle {
       font-size: 1.2rem;
       font-weight: 600;
-      margin: 40px 0 20px;
+      margin: 0 0 20px; /* Margen superior eliminado para alinear con el form */
       color: #2d3436;
-      align-self: flex-start;
     }
 
     .list {
@@ -109,7 +126,7 @@
     }
 
     .list li {
-      background: #fff;
+      background: #eff2efff;
       margin-bottom: 12px;
       padding: 15px;
       border-radius: 8px;
@@ -127,7 +144,6 @@
       color: #999;
     }
 
-    /* Footer consistente */
     footer {
       padding: 2rem;
       width: 100%;
@@ -139,6 +155,16 @@
       font-size: 0.9rem;
       color: #7f8c8d;
     }
+
+    /* Responsivo: Si la pantalla es pequeña, vuelve a una columna */
+    @media (max-width: 768px) {
+      .content-wrapper {
+        flex-direction: column;
+      }
+      .subtitle {
+          margin-top: 40px;
+      }
+    }
   </style>
 </head>
 
@@ -147,27 +173,33 @@
   <main class="main-content">
     <img class="image" src="https://img.icons8.com/external-tal-revivo-green-tal-revivo/1200/external-django-a-high-level-python-web-framework-that-encourages-rapid-development-logo-green-tal-revivo.jpg" alt="Django Logo">
 
-    <h1 class="title">Crea un mensaje</h1>
+    <h1 class="title">Panel de Mensajes</h1>
 
-    <form class="form" method="post">
-      {% csrf_token %}
-      {{ form.as_p }} <button type="submit">Enviar Mensaje</button>
-    </form>
+    <div class="content-wrapper">
+      <section class="form-section">
+        <form class="form" method="post">
+          {% csrf_token %}
+          {{ form.as_p }} 
+          <button type="submit">Enviar Mensaje</button>
+        </form>
+      </section>
 
-    <h2 class="subtitle">Mensajes recientes</h2>
-
-    <ul class="list">
-      {% for mensaje in mensajes %}
-      <li>
-        <strong>{{ mensaje.texto }}</strong>
-        <small>{{ mensaje.creado }}</small>
-      </li>
-      {% empty %}
-      <li style="border: none; text-align: center; font-style: italic; color: #999;">
-        No hay mensajes todavía 😴
-      </li>
-      {% endfor %}
-    </ul>
+      <section class="list-section">
+        <h2 class="subtitle">Mensajes recientes</h2>
+        <ul class="list">
+          {% for mensaje in mensajes %}
+          <li>
+            <strong>{{ mensaje.texto }}</strong>
+            <small>{{ mensaje.creado }}</small>
+          </li>
+          {% empty %}
+          <li style="border: none; text-align: center; font-style: italic; color: #999;">
+            No hay mensajes todavía 😴
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
   </main>
 
   <footer>
@@ -175,5 +207,4 @@
   </footer>
 
 </body>
-
 </html>

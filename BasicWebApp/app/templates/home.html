@@ -17,7 +17,7 @@
     body {
       font-family: 'Segoe UI', 'Gill Sans', Calibri, sans-serif;
       color: #333;
-      background-color: #f9f9f9;
+      background-color: #fff;
       display: flex;
       flex-direction: column;
       min-height: 100vh; /* Ocupa todo el alto de la pantalla */
@@ -52,6 +52,26 @@
       color: #2d3436;
     }
 
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      padding: 80px 10%;
+      background-color: var(--light-gray);
+    }
+    .card {
+      background: #eff2efff;
+      margin-bottom: 12px;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #092e20;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+      display: block;
+      color: #2d3436;
+    }
+    .links {
+      color: #2e7d32;
+    }
     footer {
       padding: 2rem;
     }
@@ -74,6 +94,17 @@
     
     <h1 class="title">Aplicación Web Básica con Django</h1>
   </main>
+
+  <section class="features">
+        <div class="card">
+            <h3>About...</h3>
+            <a class="links" href="/about/">Ir a la página About</a>
+        </div>
+        <div class="card">
+            <h3>Messages</h3>
+            <a class="links" href="/messages/">Ir a la página Messages</a>
+        </div>
+    </section>
 
   <footer>
     <p class="foot">Esta aplicación fue creada para aprender y practicar Django.</p>
