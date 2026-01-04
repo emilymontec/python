@@ -1,0 +1,27 @@
+mkdir testdir
+create test.txt
+put "hello world"
+view test.txt
+list
+create test.json
+put {"key": "value"}
+view test.json
+remove test.txt
+list
+restore test.txt
+list
+rename test.txt renamed.txt
+list
+move renamed.txt testdir
+list testdir
+create test.docx
+put "Document content"
+view test.docx
+create test.xlsx
+put "Excel data"
+view test.xlsx
+create test.pdf
+create test.csv
+put "csv,data"
+view test.csv
+exit
