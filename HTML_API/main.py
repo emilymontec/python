@@ -23,12 +23,15 @@ def login(
     username = username.strip()
     password = password.strip()
 
-    print("USERNAME:", repr(username))
-    print("PASSWORD:", repr(password))
-    print("USERS:", users)
-
     if username in users and users[username] == password:
-        response = RedirectResponse("/home", status_code=302)
+
+        # 🔥 redirección según rol
+        if username == "admin":
+            redirect_url = "/admin"
+        else:
+            redirect_url = "/home"
+
+        response = RedirectResponse(redirect_url, status_code=302)
         response.set_cookie("user", username)
         return response
 
@@ -94,10 +97,20 @@ def toggle_task(index: int):
 
 @app.get("/admin", response_class=HTMLResponse)
 def admin_view(request: Request):
-    return templates.TemplateResponse("admin.html", {"request": request})
+    user = request.cookies.get("user")
+
+    if user != "admin":
+        return RedirectResponse("/", status_code=302)
+
+    return templates.TemplateResponse(
+        "admin.html",
+        {"request": request, "user": user}
+    )
 
 @app.get("/logout")
 def logout():
     response = RedirectResponse("/", status_code=302)
     response.delete_cookie("user")
     return response
+
+# Para ejecutar: uvicorn main:app --reload
