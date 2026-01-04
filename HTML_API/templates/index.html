@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Minimalist Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --spring-green: #6db33f;
+            --spring-dark: #23272b;
+            --light-gray: #f8f9fa;
+            --text-main: #333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Navegación */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 10%;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--spring-dark);
+        }
+
+        .logo span {
+            color: var(--spring-green);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--spring-green);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 10%;
+            text-align: center;
+            background: #fff;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            background-color: var(--spring-green);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            padding: 80px 10%;
+            background-color: var(--light-gray);
+        }
+
+        .card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--spring-green);
+            margin-top: 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 10%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">FastAPI<span>+HTML</span></div>
+        <ul>
+            <li><a href="#">Módulo 1</a></li>
+            <li><a href="#">Módulo 2</a></li>
+            <li><a href="#">Módulo 3</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>FastAPI básica con HTML & CSS</h1>
+        <p>Una página de inicio con un diseño limpio y eficiente, estilo minimalista para aplicaciones modernas.</p>
+        <a href="#" class="btn">¡Hola!</a>
+    </header>
+
+    <section class="features">
+        <div class="card">
+            <h3>FastAPI</h3>
+            <p>Base de la aplicación.</p>
+        </div>
+        <div class="card">
+            <h3>Jinja2</h3>
+            <p>Motor para archivos HTML.</p>
+        </div>
+        <div class="card">
+            <h3>Uvicorn</h3>
+            <p>Servidor para ejecutar la aplicación.</p>
+        </div>
+    </section>
+
+    <footer>
+        Esta aplicación fue creada para aprender y prácticar FastAPI.
+    </footer>
+
+</body>
+</html>
