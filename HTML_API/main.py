@@ -94,7 +94,7 @@ def toggle_task(index: int):
 
 @app.get("/admin", response_class=HTMLResponse)
 def admin_view(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("admin.html", {"request": request})
 
 @app.get("/logout")
 def logout():

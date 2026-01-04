@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador | FastAPI +HTML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --spring-green: #6db33f;
+            --spring-dark: #23272b;
+            --light-gray: #f8f9fa;
+            --text-main: #333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navegación */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 10%;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--spring-dark);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--spring-green); }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { color: var(--spring-green); }
+
+        /* Contenedor Principal Centrado */
+        .admin-main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--light-gray);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .admin-content {
+            max-width: 600px;
+        }
+
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--spring-dark);
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .admin-description {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--spring-dark);
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 20px 10%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+            border-top: 1px solid #eee;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo">FastAPI<span>+HTML</span></a>
+        <ul>
+            <li><a href="/home">Vista Usuario</a></li>
+        </ul>
+    </nav>
+
+    <main class="admin-main">
+        <div class="admin-content">
+            <h1 class="admin-title">Vista de administrador</h1>
+            <p class="admin-description">Esta vista está en proceso de desarrollo...</p>
+        </div>
+    </main>
+
+    <footer>
+        Esta aplicación fue creada para aprender y prácticar FastAPI.
+    </footer>
+
+</body>
+</html>
