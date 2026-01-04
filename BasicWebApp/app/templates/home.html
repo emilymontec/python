@@ -4,46 +4,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Basic Web App</title>
+  <title>Basic Web App | Django</title>
   
   <style>
-    .image {
-      width:200px;
-      height: 200px;
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, 30%)
+    /* Reset básico para eliminar márgenes residuales */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    body {
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-      color: black;
 
-    }
-    .title {
-      font-size: 35px;
-      min-height: 85vh;
+    body {
+      font-family: 'Segoe UI', 'Gill Sans', Calibri, sans-serif;
+      color: #333;
+      background-color: #f9f9f9;
       display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ocupa todo el alto de la pantalla */
+    }
+
+    /* Contenedor principal centrado */
+    .main-content {
+      flex: 1; /* Empuja al footer hacia abajo */
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      padding: 20px;
     }
+
+    .image {
+      width: 180px;
+      height: auto;
+      margin-bottom: 2rem; /* Espacio exacto entre imagen y texto */
+      transition: transform 0.3s ease;
+    }
+
+    .image:hover {
+      transform: scale(1.05);
+    }
+
+    .title {
+      font-size: clamp(1.8rem, 5vw, 2.5rem); /* Tamaño fluido y responsivo */
+      font-weight: 300;
+      letter-spacing: -0.5px;
+      color: #2d3436;
+    }
+
+    footer {
+      padding: 2rem;
+    }
+
     .foot {
       text-align: center;
       font-style: italic;
-      font-size: 18px;
+      font-size: 0.9rem;
+      color: #7f8c8d;
     }
   </style>
 </head>
 
 <body>
-  <img class="image"
-src="https://img.icons8.com/external-tal-revivo-green-tal-revivo/1200/external-django-a-high-level-python-web-framework-that-encourages-rapid-development-logo-green-tal-revivo.jpg">
 
-  <h1 class="title">Aplicación Web Básica con Django!</h1>
-
+  <main class="main-content">
+    <img class="image" 
+         src="https://img.icons8.com/external-tal-revivo-green-tal-revivo/1200/external-django-a-high-level-python-web-framework-that-encourages-rapid-development-logo-green-tal-revivo.jpg" 
+         alt="Django Logo">
+    
+    <h1 class="title">Aplicación Web Básica con Django</h1>
+  </main>
 
   <footer>
-    <p class="foot">Esta aplicación fue creada para aprender y prácticar Django.</p>
+    <p class="foot">Esta aplicación fue creada para aprender y practicar Django.</p>
   </footer>
+
 </body>
 </html>
