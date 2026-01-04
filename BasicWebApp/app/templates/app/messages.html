@@ -77,7 +77,6 @@
       background: white;
       padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
 
     .form p {
@@ -145,7 +144,7 @@
     }
 
     footer {
-      padding: 2rem;
+      padding: 1rem;
       width: 100%;
     }
 
@@ -164,6 +163,44 @@
       .subtitle {
           margin-top: 40px;
       }
+    }
+    
+    /* Acciones de mensaje */
+    .message-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .action-btn {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .edit-btn {
+      background-color: #125e41;
+      color: white;
+    }
+    .edit-btn:hover {
+      background-color: #0f4d36;
+    }
+    .delete-btn {
+      background-color: #b33939;
+      color: white;
+    }
+    .delete-btn:hover {
+      background-color: #922b2b;
+    }
+    .back-link {
+      margin-top: 20px;
+      text-decoration: none;
+      color: #092e20;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -191,15 +228,21 @@
           <li>
             <strong>{{ mensaje.texto }}</strong>
             <small>{{ mensaje.creado }}</small>
-          </li>
-          {% empty %}
-          <li style="border: none; text-align: center; font-style: italic; color: #999;">
-            No hay mensajes todavía 😴
+            
+            <div class="message-actions">
+              <a href="{% url 'edit_message' mensaje.id %}" class="action-btn edit-btn">
+                Editar
+              </a>
+              <a href="{% url 'delete_message' mensaje.id %}" class="action-btn delete-btn">
+                Borrar
+              </a>
+            </div>
           </li>
           {% endfor %}
         </ul>
       </section>
     </div>
+    <a href="{% url 'home' %}" class="back-link">← Volver a Inicio</a>
   </main>
 
   <footer>

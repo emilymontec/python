@@ -61,7 +61,7 @@
     }
 
     footer {
-      padding: 2rem;
+      padding: 1rem;
     }
 
     .foot {
@@ -69,6 +69,15 @@
       font-style: italic;
       font-size: 0.9rem;
       color: #7f8c8d;
+    }
+    .back-link {
+      margin-top: 60px;
+      text-decoration: none;
+      color: #092e20;
+      font-weight: 600;
+    }
+    .back-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -83,6 +92,7 @@
     <h1 class="title">
       Ruta <span class="route-text">"/about/"</span> → Acerca de...
     </h1>
+    <a href="{% url 'home' %}" class="back-link">← Volver a Inicio</a>
   </main>
 
   <footer>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Mensaje
 from .forms import MensajeForm
 
@@ -25,3 +25,22 @@ def mensajes_view(request):
     'form': form
 })
 
+def mensajes_edit(request, id):
+    mensaje = get_object_or_404(Mensaje, id=id)
+
+    if request.method == 'POST':
+        form = MensajeForm(request.POST, instance=mensaje)
+        if form.is_valid():
+            form.save()
+            return redirect('messages')
+    else:
+        form = MensajeForm(instance=mensaje)
+
+    return render(request, 'app/edit_message.html', {
+        'form': form
+    })
+
+def mensajes_delete(request, id):
+    mensaje = get_object_or_404(Mensaje, id=id)
+    mensaje.delete()
+    return redirect('messages')

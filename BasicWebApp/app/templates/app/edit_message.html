@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Mensaje | Django Web App</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Gill Sans', Calibri, sans-serif;
+      color: #333;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .main-content {
+      flex: 1;
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .image {
+      width: 120px;
+      margin-bottom: 1.5rem;
+    }
+    .image:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+
+    .title {
+      font-size: 2rem;
+      font-weight: 300;
+      color: #2d3436;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+    }
+
+    .form p {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    textarea {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      padding: 12px;
+      cursor: pointer;
+      background-color: #092e20;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #125e41;
+    }
+
+    .back-link {
+      margin-top: 20px;
+      text-decoration: none;
+      color: #092e20;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      padding: 1rem;
+      width: 100%;
+    }
+
+    .foot {
+      text-align: center;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="main-content">
+    <img class="image"
+      src="https://img.icons8.com/external-tal-revivo-green-tal-revivo/1200/external-django-a-high-level-python-web-framework-that-encourages-rapid-development-logo-green-tal-revivo.jpg"
+      alt="Django Logo">
+
+    <h1 class="title">Editar mensaje.</h1>
+
+    <form class="form" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Guardar cambios</button>
+    </form>
+
+    <a href="{% url 'messages' %}" class="back-link">← Volver a mensajes</a>
+  </main>
+
+  <footer>
+    <p class="foot">Esta aplicación fue creada para aprender y practicar Django.</p>
+  </footer>
+
+</body>
+</html>

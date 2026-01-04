@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from app.views import home, about, mensajes_view # Importar vistas (html)
+from app.views import home, about, mensajes_view, mensajes_edit, mensajes_delete # Importar vistas (html)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'), # Ruta principal
     path('about/', about, name='about'), # Ruta /about
     path('messages/', mensajes_view, name='messages'), # Ruta /messages
+    path('messages/<int:id>/edit/', mensajes_edit, name='edit_message'),
+    path('messages/<int:id>/delete/', mensajes_delete, name='delete_message'),
 ]
 
 # Rutas de la aplicación
