@@ -1,6 +1,6 @@
 import os
-from django.shortcuts import render
 from django.conf import settings
+from django.shortcuts import render
 
 
 class MaintenanceMiddleware:
@@ -11,11 +11,11 @@ class MaintenanceMiddleware:
         )
 
     def __call__(self, request):
-        # Permitir acceso al admin SIEMPRE
+        # Permitir admin
         if request.path.startswith("/admin"):
             return self.get_response(request)
 
-        # Verificar si existe el archivo de mantenimiento
+        # Si existe el archivo → mantenimiento
         if os.path.exists(self.maintenance_file):
             return render(request, "maintenance.html", status=503)
 
