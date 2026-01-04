@@ -2,202 +2,195 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tareas | FastAPI +HTML</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Mis Tareas | FastAPI +HTML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --spring-green: #6db33f;
             --spring-dark: #23272b;
-            --border-color: #e1e4e8;
-            --text-main: #333;
-            --text-muted: #999;
-            --bg-body: #f8fafb;
+            --light-gray: #f8f9fa;
+            --border: #eee;
         }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
             margin: 0;
-            display: flex;
-            min-height: 100vh;
-            color: var(--text-main);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background: white;
-            border-right: 1px solid var(--border-color);
-            padding: 2.5rem 1.5rem;
+            background: var(--light-gray);
+            color: #333;
             display: flex;
             flex-direction: column;
-            flex-shrink: 0;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            box-sizing: border-box;
+            min-height: 100vh;
+}
+
+
+        /* NAV */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 10%;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
             font-weight: 600;
             font-size: 1.2rem;
-            margin-bottom: 3rem;
-            text-decoration: none;
-            color: var(--spring-dark);
         }
 
-        .logo span { color: var(--spring-green); }
-
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            flex-grow: 1;
-        }
-
-        .nav-links li { margin-bottom: 0.4rem; }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            padding: 12px 15px;
-            display: block;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .nav-links a.active, .nav-links a:hover {
-            background: #f0f7eb;
+        .logo span {
             color: var(--spring-green);
         }
 
-        /* Área Principal */
-        .main-wrapper {
-            flex-grow: 1;
+        nav ul {
+            list-style: none;
             display: flex;
-            flex-direction: column;
-            min-width: 0; /* Evita desbordamiento en flex */
-        }
-
-        .main-content {
-            padding: 3rem 4rem;
-            flex-grow: 1; /* Empuja el footer hacia abajo */
-        }
-
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
-
-        h1 { font-size: 1.5rem; font-weight: 600; margin: 0; }
-
-        .btn-add {
-            background: var(--spring-green);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        /* Estado Vacío */
-        .empty-state {
-            margin-top: 15vh;
-            text-align: center;
-            color: #888;
-        }
-
-        .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        /* Grid */
-        .task-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
         }
 
-        .task-card {
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: var(--spring-green);
+        }
+
+        /* MAIN */
+        main {
+            padding: 3rem 10%;
+            flex: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .user {
+            font-size: 0.85rem;
+            color: var(--spring-green);
+            font-weight: 600;
+        }
+
+        /* FORM */
+        form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            background: var(--spring-green);
+            color: white;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* TASKS */
+        .tasks {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .task {
             background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            animation: fadeIn 0.3s ease;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .task.done h3 {
+            text-decoration: line-through;
+            color: #999;
         }
 
-        /* Footer Estilo Inicio */
+        .actions a {
+            font-size: 0.75rem;
+            margin-left: 0.8rem;
+            text-decoration: none;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .actions a:hover {
+            color: var(--spring-green);
+        }
         footer {
-            padding: 2rem 4rem;
+            padding: 20px 10%;
             text-align: center;
             font-size: 0.8rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            background: white;
+            color: #999;
+            border-top: 1px solid #eee;
+            background: #fff;
         }
     </style>
 </head>
+
 <body>
 
-    <aside class="sidebar">
-        <a href="#" class="logo">FastAPI<span>+HTML</span></a>
-        <ul class="nav-links">
-            <li><a href="#" class="active">Mis Tareas</a></li>
-            <li><a href="#">Sección 1</a></li>
-            <li><a href="#">Sección 2</a></li>
-            <li><a href="#">Sección 3</a></li>
-        </ul>
-    </aside>
+<nav>
+    <div class="logo">FastAPI<span>+HTML</span></div>
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/logout">Salir</a></li>
+    </ul>
+</nav>
 
-    <div class="main-wrapper">
-        <main class="main-content">
-            <header class="header-actions">
-                <h1>Mis Tareas</h1>
-                <button class="btn-add" onclick="addTask()">+ Nueva Tarea</button>
-            </header>
+<main>
+    <header>
+        <h1>Mis Tareas</h1>
+    </header>
 
-            <div id="taskGrid" class="task-grid"></div>
+    <form method="post" action="/tasks">
+        <input type="text" name="title" placeholder="Nueva tarea..." required>
+        <button>Agregar</button>
+    </form>
 
-            <div id="emptyMessage" class="empty-state">
-                <h2>No hay tareas pendientes.</h2> 
-                <p>Disfruta de tu día o crea una nueva.</p>
+    <section class="tasks">
+        {% for task in tasks %}
+        <div class="task {{ 'done' if task['status'] == 'done' else '' }}">
+            <h3>{{ task['title'] }}</h3>
+            <div class="actions">
+                <a href="/tasks/toggle/{{ loop.index0 }}">
+                    {% if task['status'] == 'pending' %}
+                    Completar
+                    {% else %}
+                    Reabrir
+                    {% endif %}
+                </a>
+                <a href="/tasks/delete/{{ loop.index0 }}">Eliminar</a>
             </div>
-        </main>
+        </div>
+        {% endfor %}
+    </section>
+</main>
 
-        <footer>
-            Esta aplicación fue creada para aprender y prácticar FastAPI.
-        </footer>
-    </div>
+<footer>
+    Esta aplicación fue creada para aprender y prácticar FastAPI.
+</footer>
 
-    <script>
-        function addTask() {
-            const title = prompt("Título de la tarea:");
-            if (title) {
-                document.getElementById('emptyMessage').style.display = 'none';
-                const grid = document.getElementById('taskGrid');
-                const card = document.createElement('div');
-                card.className = 'task-card';
-                card.innerHTML = `
-                    <div style="color: var(--spring-green); font-size: 0.7rem; font-weight: 700; margin-bottom: 0.5rem;">TAREA</div>
-                    <h3 style="margin: 0 0 0.5rem 0;">${title}</h3>
-                    <p style="font-size: 0.85rem; color: #666; margin: 0;">Creada en tu tablero.</p>
-                `;
-                grid.prepend(card);
-            }
-        }
-    </script>
 </body>
 </html>

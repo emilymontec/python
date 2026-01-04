@@ -3,4 +3,7 @@ users = {
     "abc": "123"
 }
 
-tasks = []
+tasks = [
+    {"title": "Aprender FastAPI", "status": "pending"},
+    {"title": "Hacer CRUD", "status": "done"}
+]

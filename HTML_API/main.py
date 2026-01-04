@@ -60,19 +60,37 @@ def view_tasks(request: Request):
 
     return templates.TemplateResponse(
         "tasks.html",
-        {"request": request, "tasks": tasks}
+        {
+            "request": request,
+            "tasks": tasks
+        }
     )
 
 @app.post("/tasks")
 def add_task(title: str = Form(...)):
-    tasks.append(title)
-    return RedirectResponse(url="/tasks", status_code=302)
+    tasks.append({
+        "title": title,
+        "status": "pending"
+    })
+    return RedirectResponse("/tasks", status_code=302)
 
 @app.get("/tasks/delete/{index}")
 def delete_task(index: int):
     if 0 <= index < len(tasks):
         tasks.pop(index)
-    return RedirectResponse(url="/tasks", status_code=302)
+
+    return RedirectResponse("/tasks", status_code=302)
+
+
+@app.get("/tasks/toggle/{index}")
+def toggle_task(index: int):
+    if 0 <= index < len(tasks):
+        if tasks[index]["status"] == "pending":
+            tasks[index]["status"] = "done"
+        else:
+            tasks[index]["status"] = "pending"
+
+    return RedirectResponse("/tasks", status_code=302)
 
 @app.get("/admin", response_class=HTMLResponse)
 def admin_view(request: Request):
