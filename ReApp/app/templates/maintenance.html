@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantenimiento | ReApp</title>
+    <style>
+        /* Estructura fija sin scroll */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #f0fdf4;
+            color: #1f2937;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Indicador de estado */
+        .status-pill {
+            background: #10b981;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Contenido Central */
+        .content {
+            max-width: 650px;
+            flex-grow: 1; /* Empuja el footer hacia abajo */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            color: #064e3b;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        p {
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        /* Footer Organizado */
+        footer {
+            width: 100%;
+            max-width: 400px; /* Limita el ancho del borde inferior */
+            padding-bottom: 30px;
+            border-top: 1px solid rgba(6, 78, 59, 0.1); /* Línea divisoria sutil */
+            padding-top: 20px;
+        }
+
+        .logo-footer {
+            color: #064e3b;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Decoración: punto verde */
+        .copyright::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <div class="status-pill">Mantenimiento en curso</div>
+        <h1>Estamos optimizando nuestra aplicación.</h1>
+        <p>Esta página aparecerá  en todas nuestras rutas.</p>
+    </div>
+
+    <footer>
+        <span class="logo-footer">RE-APP</span>
+        <div class="copyright">
+            Aplicación de práctica con Django - 2026
+        </div>
+    </footer>
+
+</body>
+</html>
