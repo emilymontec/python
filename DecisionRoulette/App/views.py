@@ -19,9 +19,13 @@ def decidir(request):
     opciones = Opcion.objects.all() # Obtiene todas las opciones
     
     if opciones.exists():
-        elegida = random.choice(opciones)
+        elegido = random.choice(opciones)
     else:
-        elegida = {"texto": "No hay opciones disponibles"}
+        elegido = {"texto": "No hay opciones disponibles"}
 
     # Renderiza la plantilla con la decisión tomada
-    return render(request, 'decidir.html', {'elegida': elegida})
+    return render(request, 'decidir.html', {'elegido': elegido})
+
+def restablecer(request):
+    Opcion.objects.all().delete()
+    return redirect("home")

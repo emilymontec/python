@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.home, name="home"),
     path("decidir/", views.decidir, name="decidir"),
+    path ("restablecer/", views.restablecer, name="restablecer"),
     
 ]

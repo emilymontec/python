@@ -31,6 +31,22 @@
                 <li>{{ opcion.texto }}</li>
             {% endfor %}
         </ul>
+        <form method="post" action="{% url 'restablecer' %}" style="margin-top: 10px;"
+        onclick="return confirm('¿Seguro? Esta acción borrará todas tus malas ideas.')">
+            {% csrf_token %}
+            <button type="submit" class="btn-reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                </svg>
+                Restablecer
+            </button>
+        </form>
+
+        <footer class="disclaimer">
+            <p>⚠️ <strong>Nota legal:</strong> Esta aplicación no se hace responsable de decisiones de vida, amor, estudios, trabajo, ni mensajes enviados a tu ex a las 3 AM.</p>
+        </footer>
+
     </div>
 </div>
 
@@ -115,7 +131,9 @@
         transition: 0.2s;
     }
 
-    .center-button:hover { transform: translate(-50%, -50%) scale(1.1); }
+    .center-button:hover {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
 
     /* Formulario Minimalista */
     .input-wrapper {
@@ -154,7 +172,60 @@
         transition: 0.3s;
     }
 
-    .lucky-link:hover { color: var(--primary); }
+    .lucky-link:hover {
+        color: var(--primary);
+    }
+    .disclaimer {
+        margin-top: 2.5rem;
+        padding-top: 1px;
+        border-top: 1px solid #f1f5f9;
+    }
+
+    .disclaimer p {
+        font-size: 0.75rem;
+        color: #94a3b8; /* Gris suave moderno */
+        line-height: 1.5;
+        max-width: 80%;
+        margin: 0 auto;
+        font-style: italic;
+    }
+
+    .disclaimer strong {
+        color: #64748b;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-reset {
+    background: transparent;
+    color: #94a3b8; /* Gris azulado suave */
+    border: 1px solid #e2e8f0;
+    padding: 5px 16px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    width: 100%; /* Para que ocupe el mismo ancho que el input */
+    }
+    .btn-reset:hover {
+        background: #fff1f2; /* Un toque de rojo muy tenue */
+        color: #f43f5e;
+        border-color: #fecdd3;
+    }
+    
+    .btn-reset svg {
+        transition: transform 0.4s ease;
+    }
+    
+    .btn-reset:hover svg {
+        transform: rotate(-180deg);
+    }
 </style>
 
 <script>
