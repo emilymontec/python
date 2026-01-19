@@ -1,0 +1,203 @@
+<div class="main-wrapper">
+    <div class="ruleta-card">
+        <h1 class="title">Ruleta de Decisiones</h1>
+
+        <div class="wheel-container">
+            <div class="indicator">
+                <svg viewBox="0 0 24 24"><path d="M12 21l-12-18h24z"/></svg>
+            </div>
+            
+            <canvas id="wheelCanvas" width="500" height="500"></canvas>
+            
+            <button id="spinBtn" class="center-button">GO!</button>
+        </div>
+
+        <form method="post" class="modern-form">
+            {% csrf_token %}
+            <div class="input-wrapper">
+                <input type="text" name="texto" placeholder="¿Qué tienes en mente?" required>
+                <button type="submit">Agregar</button>
+            </div>
+        </form>
+
+        <div class="footer-actions">
+            <a href="{% url 'decidir' %}" class="lucky-link">
+                <span>✨</span> Decidir por mí
+            </a>
+        </div>
+
+        <ul id="opcionesLista" style="display:none;">
+            {% for opcion in opciones %}
+                <li>{{ opcion.texto }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<style>
+    :root {
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --primary: #6366f1; /* Indigo moderno */
+        --text: #1e293b;
+        --accent: #f43f5e;
+    }
+
+    .main-wrapper {
+        min-height: 100vh;
+        background-color: var(--bg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .ruleta-card {
+        background: var(--card);
+        padding: 2.5rem;
+        border-radius: 40px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+        width: 100%;
+        max-width: 450px;
+        text-align: center;
+    }
+
+    .title {
+        color: var(--text);
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 2rem;
+        letter-spacing: -0.5px;
+    }
+
+    /* Diseño de la Ruleta */
+    .wheel-container {
+        position: relative;
+        width: 320px;
+        height: 320px;
+        margin: 0 auto 2.5rem;
+    }
+
+    #wheelCanvas {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        box-shadow: 0 0 0 10px #fff, 0 15px 35px rgba(0,0,0,0.1);
+        transition: transform 5s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .indicator {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        fill: var(--accent);
+        z-index: 10;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+
+    .center-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: var(--text);
+        color: white;
+        border: 4px solid white;
+        border-radius: 50%;
+        font-weight: 900;
+        cursor: pointer;
+        z-index: 15;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: 0.2s;
+    }
+
+    .center-button:hover { transform: translate(-50%, -50%) scale(1.1); }
+
+    /* Formulario Minimalista */
+    .input-wrapper {
+        display: flex;
+        background: #f1f5f9;
+        padding: 6px;
+        border-radius: 16px;
+        margin-bottom: 1.5rem;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 10px 15px;
+        outline: none;
+        color: var(--text);
+        font-size: 0.95rem;
+    }
+
+    .modern-form button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .lucky-link {
+        color: #64748b;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .lucky-link:hover { color: var(--primary); }
+</style>
+
+<script>
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+    const options = [...document.querySelectorAll('#opcionesLista li')].map(li => li.innerText);
+    
+    // Paleta de colores Pastel Modernos
+    const items = options.length > 0 ? options : ["Café", "Té", "Agua", "Jugo", "Cerveza"];
+    const colors = ['#818cf8', '#fb7185', '#34d399', '#fbbf24', '#a78bfa', '#22d3ee'];
+
+    function draw() {
+        const arc = (2 * Math.PI) / items.length;
+        ctx.clearRect(0,0,500,500);
+        
+        items.forEach((text, i) => {
+            const angle = i * arc;
+            ctx.fillStyle = colors[i % colors.length];
+            
+            // Dibujar segmento
+            ctx.beginPath();
+            ctx.moveTo(250, 250);
+            ctx.arc(250, 250, 240, angle, angle + arc);
+            ctx.fill();
+            
+            // Texto estilizado
+            ctx.save();
+            ctx.translate(250, 250);
+            ctx.rotate(angle + arc / 2);
+            ctx.textAlign = "right";
+            ctx.fillStyle = "white";
+            ctx.font = "bold 22px 'Inter', sans-serif";
+            ctx.fillText(text.toUpperCase(), 210, 10);
+            ctx.restore();
+        });
+    }
+
+    let rotation = 0;
+    document.getElementById('spinBtn').onclick = () => {
+        const spin = Math.floor(Math.random() * 360) + 1800; // 5 vueltas min
+        rotation += spin;
+        canvas.style.transform = `rotate(${rotation}deg)`;
+    };
+
+    draw();
+</script>

@@ -1,0 +1,137 @@
+<div class="decision-wrapper">
+    <div class="decision-card">
+        <div id="loader" class="loader-content">
+            <div class="spinner"></div>
+            <h2 class="status-text">Consultando al destino...</h2>
+        </div>
+
+        <div id="result" class="result-content" style="display: none;">
+            <span class="badge">EL DESTINO HA HABLADO</span>
+            <h1 class="chosen-text">{{ elegida.texto }}</h1>
+            
+            <div class="action-buttons">
+                <a href="javascript:location.reload();" class="btn-retry">Intentar otra vez</a>
+                <a href="/" class="btn-back">Volver a la ruleta</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --bg: #f8fafc;
+        --primary: #6366f1;
+        --text: #1e293b;
+        --accent: #10b981; /* Verde éxito */
+    }
+
+    .decision-wrapper {
+        min-height: 100vh;
+        background: var(--bg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .decision-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        width: 90%;
+        max-width: 500px;
+        border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    /* Animación de Carga */
+    .spinner {
+        width: 60px;
+        height: 60px;
+        border: 5px solid #f1f5f9;
+        border-top: 5px solid var(--primary);
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .status-text {
+        color: #64748b;
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    /* Estilo del Resultado */
+    .badge {
+        background: #eef2ff;
+        color: var(--primary);
+        padding: 6px 16px;
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    .chosen-text {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 2.5rem;
+        line-height: 1.2;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .btn-retry {
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        padding: 14px;
+        border-radius: 16px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-retry:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .btn-back {
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .btn-back:hover { color: var(--text); }
+
+    /* Animación de entrada para el resultado */
+    .fade-in {
+        animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInScale {
+        0% { opacity: 0; transform: scale(0.9); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+</style>
+
+<script>
+    // Simulamos un retraso de "procesamiento" para crear suspense
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        const result = document.getElementById('result');
+        result.style.display = 'block';
+        result.classList.add('fade-in');
+        
+        // Efecto opcional: lanzar confeti si usas una librería como canvas-confetti
+        // confetti(); 
+    }, 2000); // 2 segundos de espera
+</script>
