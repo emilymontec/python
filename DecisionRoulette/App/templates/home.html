@@ -2,13 +2,20 @@
     <div class="ruleta-card">
         <h1 class="title">Ruleta de Decisiones</h1>
 
-        <div class="wheel-container">
+        {% if not opciones %}
+            <div class="empty-state">
+                <p>😶‍🌫️ No hay decisiones aún</p>
+                <small>Agrega opciones para que la app pueda culparse sola.</small>
+            </div>
+        {% endif %}
+
+        <div class="wheel-container" {% if not opciones %}style="display:none"{% endif %}>
             <div class="indicator">
                 <svg viewBox="0 0 24 24"><path d="M12 21l-12-18h24z"/></svg>
             </div>
-            
+
             <canvas id="wheelCanvas" width="500" height="500"></canvas>
-            
+
             <button id="spinBtn" class="center-button">GO!</button>
         </div>
 
@@ -31,8 +38,9 @@
                 <li>{{ opcion.texto }}</li>
             {% endfor %}
         </ul>
+
         <form method="post" action="{% url 'restablecer' %}" style="margin-top: 10px;"
-        onclick="return confirm('¿Seguro? Esta acción borrará todas tus malas ideas.')">
+              onsubmit="return confirm('¿Seguro? Esta acción borrará todas tus malas ideas.')">
             {% csrf_token %}
             <button type="submit" class="btn-reset">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -46,7 +54,6 @@
         <footer class="disclaimer">
             <p>⚠️ <strong>Nota legal:</strong> Esta aplicación no se hace responsable de decisiones de vida, amor, estudios, trabajo, ni mensajes enviados a tu ex a las 3 AM.</p>
         </footer>
-
     </div>
 </div>
 
@@ -54,13 +61,14 @@
     :root {
         --bg: #f8fafc;
         --card: #ffffff;
-        --primary: #6366f1; /* Indigo moderno */
+        --primary: #6366f1;
         --text: #1e293b;
         --accent: #f43f5e;
     }
 
     .main-wrapper {
-        min-height: 100vh;
+        height: 100vh;
+        overflow: hidden;
         background-color: var(--bg);
         display: flex;
         justify-content: center;
@@ -82,11 +90,28 @@
         color: var(--text);
         font-size: 1.5rem;
         font-weight: 800;
-        margin-bottom: 2rem;
-        letter-spacing: -0.5px;
+        margin-bottom: 1.5rem;
     }
 
-    /* Diseño de la Ruleta */
+    .empty-state {
+        background: #f8fafc;
+        border: 1px dashed #e2e8f0;
+        border-radius: 16px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        color: #64748b;
+    }
+
+    .empty-state p {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .empty-state small {
+        font-size: 0.75rem;
+        font-style: italic;
+    }
+
     .wheel-container {
         position: relative;
         width: 320px;
@@ -110,7 +135,6 @@
         width: 30px;
         fill: var(--accent);
         z-index: 10;
-        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
     }
 
     .center-button {
@@ -127,15 +151,8 @@
         font-weight: 900;
         cursor: pointer;
         z-index: 15;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        transition: 0.2s;
     }
 
-    .center-button:hover {
-        transform: translate(-50%, -50%) scale(1.1);
-    }
-
-    /* Formulario Minimalista */
     .input-wrapper {
         display: flex;
         background: #f1f5f9;
@@ -169,12 +186,19 @@
         text-decoration: none;
         font-size: 0.9rem;
         font-weight: 500;
-        transition: 0.3s;
     }
 
-    .lucky-link:hover {
-        color: var(--primary);
+    .btn-reset {
+        background: transparent;
+        color: #94a3b8;
+        border: 1px solid #e2e8f0;
+        padding: 5px 16px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        width: 100%;
     }
+
     .disclaimer {
         margin-top: 2.5rem;
         padding-top: 1px;
@@ -183,75 +207,40 @@
 
     .disclaimer p {
         font-size: 0.75rem;
-        color: #94a3b8; /* Gris suave moderno */
+        color: #94a3b8;
         line-height: 1.5;
         max-width: 80%;
         margin: 0 auto;
         font-style: italic;
     }
-
-    .disclaimer strong {
-        color: #64748b;
-        text-transform: uppercase;
-        font-size: 0.7rem;
-        letter-spacing: 0.5px;
-    }
-
-    .btn-reset {
-    background: transparent;
-    color: #94a3b8; /* Gris azulado suave */
-    border: 1px solid #e2e8f0;
-    padding: 5px 16px;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    width: 100%; /* Para que ocupe el mismo ancho que el input */
-    }
-    .btn-reset:hover {
-        background: #fff1f2; /* Un toque de rojo muy tenue */
-        color: #f43f5e;
-        border-color: #fecdd3;
-    }
     
-    .btn-reset svg {
-        transition: transform 0.4s ease;
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
     }
-    
-    .btn-reset:hover svg {
-        transform: rotate(-180deg);
-    }
+
 </style>
 
 <script>
     const canvas = document.getElementById('wheelCanvas');
     const ctx = canvas.getContext('2d');
     const options = [...document.querySelectorAll('#opcionesLista li')].map(li => li.innerText);
-    
-    // Paleta de colores Pastel Modernos
-    const items = options.length > 0 ? options : ["Café", "Té", "Agua", "Jugo", "Cerveza"];
-    const colors = ['#818cf8', '#fb7185', '#34d399', '#fbbf24', '#a78bfa', '#22d3ee'];
 
-    function draw() {
-        const arc = (2 * Math.PI) / items.length;
-        ctx.clearRect(0,0,500,500);
-        
-        items.forEach((text, i) => {
+    if (options.length > 0) {
+        const colors = ['#818cf8', '#fb7185', '#34d399', '#fbbf24', '#a78bfa', '#22d3ee'];
+        const arc = (2 * Math.PI) / options.length;
+
+        options.forEach((text, i) => {
             const angle = i * arc;
             ctx.fillStyle = colors[i % colors.length];
-            
-            // Dibujar segmento
+
             ctx.beginPath();
             ctx.moveTo(250, 250);
             ctx.arc(250, 250, 240, angle, angle + arc);
             ctx.fill();
-            
-            // Texto estilizado
+
             ctx.save();
             ctx.translate(250, 250);
             ctx.rotate(angle + arc / 2);
@@ -261,14 +250,12 @@
             ctx.fillText(text.toUpperCase(), 210, 10);
             ctx.restore();
         });
+
+        let rotation = 0;
+        document.getElementById('spinBtn').onclick = () => {
+            const spin = Math.floor(Math.random() * 360) + 1800;
+            rotation += spin;
+            canvas.style.transform = `rotate(${rotation}deg)`;
+        };
     }
-
-    let rotation = 0;
-    document.getElementById('spinBtn').onclick = () => {
-        const spin = Math.floor(Math.random() * 360) + 1800; // 5 vueltas min
-        rotation += spin;
-        canvas.style.transform = `rotate(${rotation}deg)`;
-    };
-
-    draw();
 </script>

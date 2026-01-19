@@ -1,19 +1,42 @@
 <div class="decision-wrapper">
     <div class="decision-card">
-        <div id="loader" class="loader-content">
-            <div class="spinner"></div>
-            <h2 class="status-text">Consultando al destino...</h2>
-        </div>
 
-        <div id="result" class="result-content" style="display: none;">
-            <span class="badge">EL DESTINO HA HABLADO</span>
-            <h1 class="chosen-text">{{ elegida.texto }}</h1>
-            
-            <div class="action-buttons">
-                <a href="javascript:location.reload();" class="btn-retry">Intentar otra vez</a>
-                <a href="/" class="btn-back">Volver a la ruleta</a>
+        {% if decision %}
+            <div id="loader" class="loader-content fade-in">
+                <div class="spinner"></div>
+                <h2 class="status-text">Consultando al destino...</h2>
             </div>
-        </div>
+
+            <div id="result" class="result-content" style="display: none;">
+                <span class="badge">EL DESTINO HA HABLADO</span>
+                <h1 class="chosen-text">{{ decision.texto }}</h1>
+
+                <div class="action-buttons">
+                    <a href="{% url 'decidir' %}" class="btn-retry">Intentar otra vez</a>
+                    <a href="/" class="btn-back">Volver a la ruleta</a>
+                </div>
+            </div>
+
+            <script>
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                    const result = document.getElementById('result');
+                    result.style.display = 'block';
+                    result.classList.add('fade-in');
+                }, 1800);
+            </script>
+
+        {% else %}
+            <div class="empty-state fade-in">
+                <div class="empty-icon">📂</div>
+                <h2 class="empty-title">¡Ups! Está vacío</h2>
+                <p class="empty-text">
+                    No hay opciones. Agrega alguna y luego vuelve a delegar tu responsabilidad.
+                </p>
+                <a href="/" class="btn-retry">Ir a agregar opciones</a>
+            </div>
+        {% endif %}
+
     </div>
 </div>
 
@@ -22,16 +45,23 @@
         --bg: #f8fafc;
         --primary: #6366f1;
         --text: #1e293b;
-        --accent: #10b981; /* Verde éxito */
+        --accent: #10b981;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: 'Inter', sans-serif;
     }
 
     .decision-wrapper {
-        min-height: 100vh;
+        height: 100vh;
         background: var(--bg);
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: 'Inter', sans-serif;
     }
 
     .decision-card {
@@ -45,7 +75,6 @@
         border: 1px solid rgba(0,0,0,0.03);
     }
 
-    /* Animación de Carga */
     .spinner {
         width: 60px;
         height: 60px;
@@ -56,7 +85,9 @@
         animation: spin 1s linear infinite;
     }
 
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
 
     .status-text {
         color: #64748b;
@@ -64,7 +95,6 @@
         font-weight: 500;
     }
 
-    /* Estilo del Resultado */
     .badge {
         background: #eef2ff;
         color: var(--primary);
@@ -101,7 +131,10 @@
         transition: 0.3s;
     }
 
-    .btn-retry:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-retry:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
 
     .btn-back {
         color: #94a3b8;
@@ -110,28 +143,39 @@
         font-weight: 500;
     }
 
-    .btn-back:hover { color: var(--text); }
-
-    /* Animación de entrada para el resultado */
-    .fade-in {
-        animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    .btn-back:hover {
+        color: var(--text);
     }
 
-    @keyframes fadeInScale {
-        0% { opacity: 0; transform: scale(0.9); }
-        100% { opacity: 1; transform: scale(1); }
+    .empty-state {
+        padding: 20px;
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .empty-title {
+        color: var(--text);
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .empty-text {
+        color: #64748b;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 </style>
-
-<script>
-    // Simulamos un retraso de "procesamiento" para crear suspense
-    setTimeout(() => {
-        document.getElementById('loader').style.display = 'none';
-        const result = document.getElementById('result');
-        result.style.display = 'block';
-        result.classList.add('fade-in');
-        
-        // Efecto opcional: lanzar confeti si usas una librería como canvas-confetti
-        // confetti(); 
-    }, 2000); // 2 segundos de espera
-</script>

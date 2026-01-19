@@ -15,17 +15,20 @@ def home(request):
     return render(request, "home.html", {"opciones": opciones})
 
 
-def decidir(request):
-    opciones = Opcion.objects.all() # Obtiene todas las opciones
-    
-    if opciones.exists():
-        elegido = random.choice(opciones)
-    else:
-        elegido = {"texto": "No hay opciones disponibles"}
 
-    # Renderiza la plantilla con la decisión tomada
-    return render(request, 'decidir.html', {'elegido': elegido})
+def decidir(request):
+    opciones = list(Opcion.objects.all())
+
+    if opciones:
+        decision = random.choice(opciones)
+    else:
+        decision = None
+
+    return render(request, "decidir.html", {
+        "decision": decision
+    })
 
 def restablecer(request):
-    Opcion.objects.all().delete()
+    if request.method == "POST":
+        Opcion.objects.all().delete()
     return redirect("home")
