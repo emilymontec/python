@@ -11,7 +11,7 @@ Proyectos básicos para aprender y prácticar Python.
 - **ReApp:** Web de práctica para comprender peticiones a las URLs
 
 ## Herramientas
-![FastAPI](https://img.shields.io/badge/fastapi-179C7D?style=for-the-badge&logo=logoColor=white)
-![Django](https://img.shields.io/badge/django-005F0F.svg?style=for-the-badge&logo=logoColor=white) 
-![Uvicorn](https://img.shields.io/badge/uvicorn-FE5196?style=for-the-badge&logo=uvicorn&logoColor=white)
-![Gunicorn](https://img.shields.io/badge/gunicorn-1FB141.svg?style=for-the-badge&logo=logoColor=white)
+![FastAPI](https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Django](https://img.shields.io/badge/django-092E20.svg?style=for-the-badge&logo=django&logoColor=white)
+![Uvicorn](https://img.shields.io/badge/uvicorn-2C4F7C?style=for-the-badge&logo=uvicorn&logoColor=white)
+![Gunicorn](https://img.shields.io/badge/gunicorn-499848.svg?style=for-the-badge&logo=logoColor=white)
