@@ -9,10 +9,9 @@
 </head>
 <body>
   <nav class="navbar">
-    <a href="{% url 'lista_incidentes' %}" class="logo">RecordsInc</a>
+    <a href="{% url 'App:home' %}" class="logo">RecordsInc</a>
     <ul class="nav-links">
-      <li><a href="{% url 'lista_incidentes' %}">Home</a></li>
-      <li><a href="{% url 'App:tickets_home' %}">Tickets</a></li>
+      <li><a href="{% url 'App:home' %}">Home</a></li>
       <li><a href="{% url 'App:incident_create' %}">Crear incidente</a></li>
     </ul>
   </nav>
@@ -25,7 +24,42 @@
   </div>
   {% endif %}
 
-  {% block content %}{% endblock %}
+  {% block content %}
+    {% if incidentes %}
+    <header class="site-header">
+      <h1>Incidentes diarios</h1>
+      <a class="btn btn-primary" href="{% url 'App:incident_create' %}">+ Nuevo incidente</a>
+    </header>
+
+    <main class="container">
+      <ul class="incidents-list">
+        {% for incidente in incidentes %}
+        <li class="incident-card">
+          <div class="card-header">
+            <strong class="project">{{ incidente.proyecto }}</strong>
+            <span class="date">{{ incidente.fecha }}</span>
+          </div>
+          <div class="card-body">
+            <p><strong>Gravedad:</strong> {{ incidente.get_gravedad_display }}</p>
+            <p><strong>Estado:</strong> {{ incidente.get_estado_display }}</p>
+            <p><strong>Qué pasó:</strong> {{ incidente.que_paso }}</p>
+            <p><strong>Cómo se arregló:</strong> {{ incidente.como_se_arreglo|default:"Pendiente" }}</p>
+          </div>
+          <div class="card-actions">
+            <a href="{% url 'App:incident_detail' incidente.pk %}">Ver</a>
+            <a href="{% url 'App:incident_edit' incidente.pk %}">Editar</a>
+            <a href="{% url 'App:incident_delete' incidente.pk %}">Eliminar</a>
+          </div>
+        </li>
+        {% empty %}
+        <li>No hay incidentes aún.</li>
+        {% endfor %}
+      </ul>
+    </main>
+    {% else %}
+      {% block page_content %}{% endblock %}
+    {% endif %}
+  {% endblock %}
 
   <script src="{% static 'js/main.js' %}"></script>
 </body>

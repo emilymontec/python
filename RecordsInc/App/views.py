@@ -8,7 +8,7 @@ from django.contrib import messages
 # Create your views here.
 def lista_incidentes(request):
     incidentes = Incidente.objects.order_by('-fecha')
-    return render(request, 'pages/home.html', {
+    return render(request, 'base.html', {
         'incidentes': incidentes
     })
 
@@ -23,7 +23,7 @@ class IncidenteCreateView(CreateView):
     model = Incidente
     form_class = IncidenteForm
     template_name = 'pages/incident_form.html'
-    success_url = reverse_lazy('lista_incidentes')
+    success_url = reverse_lazy('App:home')
 
     def form_valid(self, form):
         messages.success(self.request, "Incidente creado correctamente.")
@@ -34,7 +34,7 @@ class IncidenteUpdateView(UpdateView):
     model = Incidente
     form_class = IncidenteForm
     template_name = 'pages/incident_form.html'
-    success_url = reverse_lazy('lista_incidentes')
+    success_url = reverse_lazy('App:home')
 
     def form_valid(self, form):
         messages.success(self.request, "Incidente actualizado correctamente.")
@@ -44,7 +44,7 @@ class IncidenteUpdateView(UpdateView):
 class IncidenteDeleteView(DeleteView):
     model = Incidente
     template_name = 'pages/incident_confirm_delete.html'
-    success_url = reverse_lazy('lista_incidentes')
+    success_url = reverse_lazy('App:home')
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "Incidente eliminado.")

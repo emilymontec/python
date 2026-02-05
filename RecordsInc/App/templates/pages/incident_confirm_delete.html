@@ -6,7 +6,7 @@
   <form method="post">
     {% csrf_token %}
     <button class="btn btn-danger" type="submit">Eliminar</button>
-    <a class="btn" href="{% url 'lista_incidentes' %}">Cancelar</a>
+    <a class="btn" href="{% url 'App:home' %}">Cancelar</a>
   </form>
 </main>
 {% endblock %}
