@@ -1,0 +1,32 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RecordsInc</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="{% url 'lista_incidentes' %}" class="logo">RecordsInc</a>
+    <ul class="nav-links">
+      <li><a href="{% url 'lista_incidentes' %}">Home</a></li>
+      <li><a href="{% url 'App:tickets_home' %}">Tickets</a></li>
+      <li><a href="{% url 'App:incident_create' %}">Crear incidente</a></li>
+    </ul>
+  </nav>
+
+  {% if messages %}
+  <div class="messages container">
+    {% for message in messages %}
+      <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

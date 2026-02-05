@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="container">
+  <article class="incident-card">
+    <div class="card-header">
+      <strong class="project">{{ incidente.proyecto }}</strong>
+      <span class="date">{{ incidente.fecha }}</span>
+    </div>
+    <div class="card-body">
+      <p><strong>Gravedad:</strong> {{ incidente.get_gravedad_display }}</p>
+      <p><strong>Estado:</strong> {{ incidente.get_estado_display }}</p>
+      <p><strong>Qué pasó:</strong> {{ incidente.que_paso }}</p>
+      <p><strong>Cómo se arregló:</strong> {{ incidente.como_se_arreglo|default:"Pendiente" }}</p>
+    </div>
+    <div class="card-actions">
+      <a href="{% url 'App:incident_edit' incidente.pk %}" class="btn">Editar</a>
+      <a href="{% url 'App:incident_delete' incidente.pk %}" class="btn btn-danger">Eliminar</a>
+      <a href="{% url 'lista_incidentes' %}" class="btn">Volver</a>
+    </div>
+  </article>
+</main>
+{% endblock %}
