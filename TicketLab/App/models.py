@@ -38,6 +38,8 @@ class Incidente(models.Model):
         default='abierto'
     )
     fecha = models.DateField(auto_now_add=True)
+    creado_por = models.CharField(max_length=100, blank=True)
+    cerrado_por = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f"{self.proyecto} - {self.gravedad} - {self.fecha}"

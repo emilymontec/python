@@ -11,6 +11,16 @@
         <p class="ticket-info">
             Gravedad: {{ incidente.get_gravedad_display }} · Estado: {{ incidente.get_estado_display }}
         </p>
+        {% if incidente.creado_por %}
+            <p class="ticket-info">
+                Creado por: {{ incidente.creado_por }}
+            </p>
+        {% endif %}
+        {% if incidente.cerrado_por %}
+            <p class="ticket-info">
+                Cerrado por: {{ incidente.cerrado_por }}
+            </p>
+        {% endif %}
         {% if incidente.como_se_arreglo %}
             <p class="ticket-info">
                 Resolución: {{ incidente.como_se_arreglo }}

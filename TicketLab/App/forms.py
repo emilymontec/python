@@ -4,7 +4,7 @@ from .models import Incidente, Proyecto
 class IncidenteForm(forms.ModelForm):
     class Meta:
         model = Incidente
-        fields = ['proyecto', 'que_paso', 'gravedad', 'estado', 'como_se_arreglo']
+        fields = ['proyecto', 'que_paso', 'gravedad', 'estado', 'creado_por', 'como_se_arreglo']
         widgets = {
             'que_paso': forms.Textarea(attrs={'rows':3}),
             'como_se_arreglo': forms.Textarea(attrs={'rows':3}),
@@ -22,7 +22,7 @@ class ProyectoForm(forms.ModelForm):
 class IncidenteCompleteForm(forms.ModelForm):
     class Meta:
         model = Incidente
-        fields = ['como_se_arreglo']
+        fields = ['como_se_arreglo', 'cerrado_por']
         widgets = {
             'como_se_arreglo': forms.Textarea(attrs={'rows':3}),
         }
