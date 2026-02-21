@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <h2 class="page-title">Detalle de incidente</h2>
+    <div class="card">
+        <p class="ticket-info">
+            Proyecto: {{ incidente.proyecto.nombre }} · Fecha: {{ incidente.fecha }}
+        </p>
+        <h3 class="ticket-title">{{ incidente.que_paso }}</h3>
+        <p class="ticket-info">
+            Gravedad: {{ incidente.get_gravedad_display }} · Estado: {{ incidente.get_estado_display }}
+        </p>
+        {% if incidente.como_se_arreglo %}
+            <p class="ticket-info">
+                Resolución: {{ incidente.como_se_arreglo }}
+            </p>
+        {% endif %}
+        <div class="actions-row">
+            <a href="{% url 'App:incident_delete' incidente.pk %}" class="inline-link">Eliminar</a>
+            <a href="{% url 'App:home' %}" class="inline-link">Volver al listado</a>
+        </div>
+    </div>
+
+    <div class="two-column" style="margin-top:16px;">
+        <div class="card">
+            <h2 class="page-title">Editar incidente</h2>
+            <form method="post" action="{% url 'App:incident_edit' incidente.pk %}">
+                {% csrf_token %}
+                {{ edit_form.as_p }}
+                <button type="submit" class="primary-button">Guardar cambios</button>
+            </form>
+        </div>
+        <div class="card">
+            <h2 class="page-title">Completar incidente</h2>
+            {% if incidente.estado == 'cerrado' %}
+                <p class="empty-state">Este incidente ya está cerrado.</p>
+            {% else %}
+                <form method="post" action="{% url 'App:incident_complete' incidente.pk %}">
+                    {% csrf_token %}
+                    {{ complete_form.as_p }}
+                    <button type="submit" class="primary-button">Marcar como cerrado</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

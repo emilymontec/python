@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <div class="list-layout">
+        <div class="list-toolbar">
+            <div class="toolbar-left">
+                <h2 class="page-title">Inbox de incidentes</h2>
+                <p class="page-subtitle">Revisa, filtra y navega rápidamente por los incidentes abiertos.</p>
+            </div>
+            <div class="toolbar-right">
+                <input type="search" placeholder="Buscar incidente" class="search-input" data-ticket-search>
+            </div>
+        </div>
+        <div class="list-container">
+            {% if incidentes %}
+                <div class="list-header">
+                    <span>Estado-</span>
+                    <span>Detalle</span>
+                    <span>Prioridad-</span>
+                    <span>Proyecto</span>
+                </div>
+                {% for incidente in incidentes %}
+                    <article class="ticket-group" data-ticket-group>
+                        <div class="ticket-item">
+                            {% if incidente.estado == 'abierto' %}
+                                <span class="status-pill todo">Abierto</span>
+                            {% elif incidente.estado == 'en_progreso' %}
+                                <span class="status-pill doing">En progreso</span>
+                            {% else %}
+                                <span class="status-pill done">Cerrado</span>
+                            {% endif %}
+
+                            <div class="title-group">
+                                <span class="ticket-title">
+                                    {{ incidente.que_paso|truncatechars:80 }}
+                                </span>
+                                <span class="ticket-info">
+                                    #{{ incidente.id }} · {{ incidente.proyecto.nombre }} · {{ incidente.fecha }}
+                                </span>
+                            </div>
+
+                            {% if incidente.gravedad == 'alta' or incidente.gravedad == 'critica' %}
+                                <div class="priority-indicator high"></div>
+                            {% else %}
+                                <div class="priority-indicator"></div>
+                            {% endif %}
+
+                            <div class="avatar">
+                                {{ incidente.proyecto.nombre|first|upper }}
+                            </div>
+                        </div>
+                        <div class="actions-row ticket-actions">
+                            <a href="{% url 'App:incident_detail' incidente.pk %}" class="inline-link">Ver</a>
+                            <a href="{% url 'App:incident_edit' incidente.pk %}" class="inline-link">Editar</a>
+                            {% if incidente.estado != 'cerrado' %}
+                                <a href="{% url 'App:incident_complete' incidente.pk %}" class="inline-link">Completar</a>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p class="empty-state">Aún no hay incidentes registrados.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

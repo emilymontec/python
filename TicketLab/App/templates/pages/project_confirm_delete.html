@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <h2 class="page-title">Eliminar proyecto</h2>
+    <div class="card">
+        <p class="empty-state">
+            ¿Seguro que deseas eliminar este proyecto?
+        </p>
+        <p class="ticket-info">
+            {{ object.nombre }}
+        </p>
+        <form method="post" class="actions-row">
+            {% csrf_token %}
+            <button type="submit" class="primary-button danger-button">Eliminar</button>
+            <a href="{% url 'App:projects' %}" class="inline-link">Cancelar</a>
+        </form>
+    </div>
+</section>
+{% endblock %}
+

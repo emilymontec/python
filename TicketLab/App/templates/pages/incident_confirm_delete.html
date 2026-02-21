@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <h2 class="page-title">Eliminar incidente</h2>
+    <div class="card">
+        <p class="empty-state">
+            ¿Seguro que deseas eliminar este incidente?
+        </p>
+        <p class="ticket-info">
+            {{ object.que_paso|truncatechars:120 }}
+        </p>
+        <form method="post" class="actions-row">
+            {% csrf_token %}
+            <button type="submit" class="primary-button danger-button">Eliminar</button>
+            <a href="{% url 'App:home' %}" class="inline-link">Cancelar</a>
+        </form>
+    </div>
+</section>
+{% endblock %}
+

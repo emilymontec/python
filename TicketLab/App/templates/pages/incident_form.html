@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="two-column">
+    <div class="card">
+        <h2 class="page-title">
+            {% if form.instance.pk %}Editar incidente{% else %}Nuevo incidente{% endif %}
+        </h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="primary-button">Guardar</button>
+        </form>
+    </div>
+    <div>
+        <div class="card">
+            <h2>Atajos</h2>
+            <p class="empty-state">
+                Revisa el listado para ver todos los incidentes.
+            </p>
+            <a href="{% url 'App:home' %}" class="inline-link">Ver incidentes</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

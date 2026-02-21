@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <div class="two-column">
+        <div class="card">
+            <h2>Crear proyecto</h2>
+            <p class="empty-state">
+                Usa el formulario para registrar un nuevo proyecto.
+            </p>
+            <a href="{% url 'App:project_create' %}" class="inline-link">Ir al formulario de proyecto</a>
+        </div>
+        <div>
+            <div class="list-layout">
+                <div class="list-toolbar">
+                    <div class="toolbar-left">
+                        <h2 class="page-title">Proyectos</h2>
+                        <p class="page-subtitle">Listado de proyectos registrados y cantidad de incidentes asociados.</p>
+                    </div>
+                    <div class="toolbar-right">
+                        <input type="search" placeholder="Buscar proyecto" class="search-input" data-ticket-search>
+                    </div>
+                </div>
+                <div class="list-container">
+                    {% if projects %}
+                        <div class="list-header">
+                            <span>Tipo</span>
+                            <span>Proyecto</span>
+                            <span>Incidentes</span>
+                            <span>Inicial</span>
+                        </div>
+                        {% for proyecto in projects %}
+                            <article class="ticket-group" data-ticket-group>
+                                <div class="ticket-item">
+                                    <span class="status-pill todo">Proyecto</span>
+                                    <div class="title-group">
+                                        <span class="ticket-title">{{ proyecto.nombre }}</span>
+                                        <span class="ticket-info">
+                                            {{ proyecto.descripcion|default:"Sin descripción" }}
+                                        </span>
+                                        <span class="ticket-info">
+                                            Incidentes: {{ proyecto.incidentes.count }}
+                                        </span>
+                                    </div>
+                                    <div class="priority-indicator"></div>
+                                    <div class="avatar">
+                                        {{ proyecto.nombre|first|upper }}
+                                    </div>
+                                </div>
+                                <div class="actions-row ticket-actions">
+                                    <a href="{% url 'App:project_edit' proyecto.pk %}" class="inline-link">Editar</a>
+                                    <a href="{% url 'App:project_delete' proyecto.pk %}" class="inline-link">Eliminar</a>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-state">Aún no hay proyectos creados.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

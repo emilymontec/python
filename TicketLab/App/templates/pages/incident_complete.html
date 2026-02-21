@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="two-column">
+    <div class="card">
+        <h2 class="page-title">Completar incidente</h2>
+        <p class="ticket-info">
+            Al completar se cambia el estado a Cerrado.
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="primary-button">Marcar como cerrado</button>
+        </form>
+    </div>
+    <div>
+        <div class="card">
+            <h2>Volver</h2>
+            <a href="{% url 'App:home' %}" class="inline-link">Regresar al listado</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
