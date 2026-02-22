@@ -442,28 +442,50 @@
 
         @media (max-width: 768px) {
             body {
-                padding: 1.5rem;
+                padding: 1.25rem;
             }
 
             .wrapper {
-                padding: 1.25rem 1.25rem 1.75rem;
+                padding: 1rem 1rem 1.5rem;
             }
 
             header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 0.5rem;
             }
 
             .header-meta {
                 align-items: flex-start;
+                font-size: 0.72rem;
+            }
+
+            .header-meta span {
+                width: 100%;
             }
 
             nav {
                 border-radius: 10px;
+                gap: 6px;
             }
 
             .list-header {
                 display: none;
+            }
+
+            .list-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .toolbar-right {
+                width: 100%;
+            }
+
+            .search-input {
+                width: 100%;
+                min-width: 0;
             }
 
             .ticket-item {
@@ -478,6 +500,26 @@
             .two-column {
                 grid-template-columns: minmax(0, 1fr);
                 gap: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            nav a {
+                width: 100%;
+            }
+
+            .wrapper {
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
             }
         }
     </style>
